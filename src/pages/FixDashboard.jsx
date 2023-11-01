@@ -8,6 +8,7 @@ import { GetMovieList } from "../redux/actions/getMovies";
 import SearchIcon from "@rsuite/icons/Search";
 import { useNavigate } from "react-router-dom";
 import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { setLoggedIn, setToken, setUser } from "../redux/reducers/auth/authLogin";
 // import { Link } from "react-router-dom";
 
 const FixDashboard = () => {
@@ -51,10 +52,13 @@ const FixDashboard = () => {
           <button 
           onClick={()=>{
             CookieStorage.remove(CookieKeys.AuthToken)
+            dispatch(setToken(undefined))
+            dispatch(setLoggedIn(false))
+            dispatch(setUser(""))
             navigate('/')
           }} 
           className="bg-red-600 text-white py-0.5 px-1 font-normal text-[1rem] border-2 border-red-600 outline-red-600 rounded-full w-[6rem] h-[2.5rem]">
-            Register
+            LogOut
           </button>
         </div>
       </div>
