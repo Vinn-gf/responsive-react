@@ -1,6 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit'
-// import EditDataRedux from '../action/EditDataRedux'
-// import KotakMakeUp from '../action/KotakMakeUp'
 import rootReducer from '../reducers'
 import thunk from 'redux-thunk'
 
