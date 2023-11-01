@@ -10,10 +10,11 @@ export const PostLoginUser = (input) => (dispatch) => {
       dispatch(setToken(result.data.data.token))
       dispatch(setLoggedIn(true))
       dispatch(setUser(input))
-      return true
+      return true // indikasi login berhasil
   }).catch((err) => {
     console.log(err, 'err')
     alert(err.response.data.message)
+    return false // indikasi login gagal
   });
  
 

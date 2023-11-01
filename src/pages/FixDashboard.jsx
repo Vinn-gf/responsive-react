@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PlayOutlineIcon from "@rsuite/icons/PlayOutline";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import "swiper/swiper-bundle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { GetMovieList } from "../redux/actions/getMovies";
 
