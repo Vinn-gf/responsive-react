@@ -11,11 +11,11 @@ const authMovieSlice = createSlice({
     initialState,
     reducers :{
         setMovies : (state, action) => {
-            state.movies = { ...state, movies : action.payload}
+            state.movies = action.payload
         },
 
          setUsedPage : (state, action) => {
-            state.usedPage = { ...state, usedPage : action.payload}
+            state.usedPage = action.payload
         }
     }
 })

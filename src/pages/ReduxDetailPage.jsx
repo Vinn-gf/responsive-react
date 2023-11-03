@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { GetDetailMovies } from "../redux/actions/getDetail";
 import SearchIcon from "@rsuite/icons/Search";
 import PlayOutlineIcon from "@rsuite/icons/PlayOutline";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-regular-svg-icons";
+import { CookieKeys, CookieStorage } from "../utils/cookies";
+import { setLoggedIn, setToken, setUser } from "../redux/reducers/auth/authLogin";
+import { setTokenMe } from "../redux/reducers/meUser/authMe";
 
 const ReduxDetailPage = () => {
   const { id } = useParams();
@@ -13,6 +16,7 @@ const ReduxDetailPage = () => {
   const detailData = useSelector((state) => state.detailBox.detailMovies);
   const [Detail, setDetail] = useState([]);
   const [Loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
   useEffect(() => {
     setLoading(true);
@@ -50,7 +54,7 @@ const ReduxDetailPage = () => {
         </div>
       ) : (
         <>
-          <div className="header-section absolute flex justify-between w-full z-99">
+          <div className="header-section absolute flex justify-between w-full z-99 px-[1rem]">
           <Link to={`/home`} className="brand-text">
             <h1 className="font-black z-99 outline-red-600 tracking-wider font-poppins text-[2.5rem] text-red-600 ml-2">
               MovieList
@@ -71,12 +75,19 @@ const ReduxDetailPage = () => {
             </div>
           </div>
           <div className="head-btn flex gap-4 justify-center items-center z-99">
-            <button className="bg-transparent py-0.5 px-1 font-normal text-[1rem] border-2 text-red-600 border-red-600 outline-red-600 rounded-full w-[6rem] h-[2.5rem]">
-              Login
-            </button>
-            <button className="bg-red-600 text-white py-0.5 px-1 font-normal text-[1rem] border-2 border-red-600 outline-red-600 rounded-full w-[6rem] h-[2.5rem]">
-              Register
-            </button>
+            <button
+                onClick={() => {
+                  CookieStorage.remove(CookieKeys.AuthToken);
+                  dispatch(setToken(undefined));
+                  dispatch(setLoggedIn(false));
+                  dispatch(setUser(""));
+                  dispatch(setTokenMe(""))
+                  navigate("/");
+                }}
+                className="bg-red-600 text-white py-0.5 px-1 font-normal text-[1rem] border-2 border-red-600 outline-red-600 rounded-full w-[6rem] h-[2.5rem]"
+              >
+                LogOut
+              </button>
           </div>
         </div>
           <div
@@ -86,7 +97,7 @@ const ReduxDetailPage = () => {
             <div className="absolute top-0 left-0 w-full h-full bg-opacity-60 bg-black"></div>
             <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent"></div>
             <div
-              className={`desc-section flex flex-col gap-4 w-[50%] text-white mx-4`}
+              className={`desc-section flex flex-col gap-4 w-[50%] text-white mx-[1.5rem]`}
             >
               <div className="Movie-title z-50">
                 <h1 className="font-extrabold font-montserrat text-[4rem] leading-[4.5rem]">

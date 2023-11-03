@@ -13,68 +13,52 @@ import {
   setToken,
   setUser,
 } from "../redux/reducers/auth/authLogin";
-// import { setPages } from "../redux/reducers/movie/authMovie";
 import PopularMovies from "../assets/components/PopularComponents/PopularMovies";
-import { GetUserMe } from "../redux/actions/getMe";
+// import { GetUserMe } from "../redux/actions/getMe";
 import { setTokenMe } from "../redux/reducers/meUser/authMe";
-// import { GetSearchMovies } from "../redux/actions/getSearch";
-// import { setUsedPage } from "../redux/reducers/movie/authMovie";
 
 const FixDashboard = () => {
   const [Popular, setPopular] = useState([]);
-  const [PageNow, setPageNow] = useState(1);
-  const [Search, setSearch] = useState("")
-  // const [SearchResult, setSearchResult] = useState([])
+  const [Search, setSearch] = useState("");
+  const [Loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const movieData = useSelector((state) => state.movieBox.movies);
-  // const searchData = useSelector((state) => state.searchBox.searchMovies);
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(GetMovieList(PageNow))
-      .then(() => {
-        setPopular(movieData.movies);
-        console.log(movieData.movies, 'movieData.movies')
-      })
-      dispatch(GetUserMe())
-      .catch((err) => {
-        console.log(err, 'error dash');
-      });
-  }, [dispatch, PageNow]);
+    setLoading(true);
 
-   const renderPopularMovieList = () => {
+    dispatch(GetMovieList(1))
+      .then((result) => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err, "err dashboard");
+        setLoading(false);
+      });
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!Loading) {
+      setPopular(movieData);
+    }
+  }, [movieData, Loading]);
+
+  const renderPopularMovieList = () => {
     return Popular.slice(0, 5).map((movie, i) => {
       return <PopularMovies key={i} dataPopular={movie} />;
     });
   };
 
-  // const showSearchMovies = () => {
-  //   dispatch(GetSearchMovies(Search))
-  //     .then(() => {
-  //       console.log(searchData, 'searchMovies');
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  const handlePageMinus = () => {
-    if (PageNow > 1) {
-      setPageNow(PageNow - 1)
-    } else {
-      alert("Sudah di ujung halaman");
-    }
-  };
-
-  const handlePagePlus = () => {
-   setPageNow(PageNow + 1);
-  };
-
   return (
     <div className="parents">
-      {Popular ? (
+      {Loading && Popular ? (
+        <span>
+          <h2>Sedang Memuat....</h2>
+        </span>
+      ) : (
         <>
-          <div className="header-section absolute flex justify-between z-50 w-full">
+          <div className="header-section absolute flex justify-between z-50 w-full px-[1rem]">
             <div className="brand-text flex justify-center items-center">
               <h1 className="font-black outline-red-600 tracking-wider font-poppins text-[2.5rem] text-red-600 ml-2">
                 MovieList
@@ -86,41 +70,26 @@ const FixDashboard = () => {
                   value={Search}
                   onChange={(e) => {
                     setSearch(e.target.value);
-                    // showSearchMovies() 
+                    // showSearchMovies()
                   }}
                   className="border-2 w-full bg-transparent font-bold font-montserrat text-white border-red-600 rounded-full px-4 py-2 outline-red-600 focus:border-red-600 focus:outline-none"
                   placeholder="what do you want to watch?"
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex justify-center items-center">
-                <Link to={`/search/${Search}`}>
-                  <SearchIcon className="text-[1.5rem] hover:scale-[110%] text-slate-300 mx-2" />
-                </Link>
+                  <Link to={`/search/${Search}`}>
+                    <SearchIcon className="text-[1.5rem] hover:scale-[110%] text-slate-300 mx-2" />
+                  </Link>
                 </div>
               </div>
             </div>
-            <div className="head-btn flex gap-4 justify-center items-center mr-2">
-              <span className="text-white">Page : {PageNow}</span>
-              <button
-                onClick={handlePagePlus}
-                className="bg-green-600 text-white py-0.5 px-1 font-normal text-[1rem] border-2 border-green-600 outline-green-600 rounded-full w-[6rem] h-[2.5rem]"
-              >
-                Plus
-              </button>
-
-              <button
-                onClick={handlePageMinus}
-                className="bg-amber-600 text-white py-0.5 px-1 font-normal text-[1rem] border-2 border-amber-600 outline-amber-600 rounded-full w-[6rem] h-[2.5rem]"
-              >
-                Minus
-              </button>
-
+            <div className="head-btn flex gap-4 justify-center items-center mr-2">              
               <button
                 onClick={() => {
                   CookieStorage.remove(CookieKeys.AuthToken);
                   dispatch(setToken(undefined));
                   dispatch(setLoggedIn(false));
                   dispatch(setUser(""));
-                  dispatch(setTokenMe(""))
+                  dispatch(setTokenMe(""));
                   navigate("/");
                 }}
                 className="bg-red-600 text-white py-0.5 px-1 font-normal text-[1rem] border-2 border-red-600 outline-red-600 rounded-full w-[6rem] h-[2.5rem]"
@@ -152,7 +121,7 @@ const FixDashboard = () => {
                     <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent"></div>
                     <div
                       key={i}
-                      className={`desc-section flex flex-col gap-4 w-[50%] text-white mx-4`}
+                      className={`desc-section flex flex-col gap-4 w-[50%] text-white mx-[1.5rem]`}
                     >
                       <div className="Movie-title">
                         <h1 className="font-extrabold font-montserrat text-[4rem] leading-[4.5rem]">
@@ -177,24 +146,24 @@ const FixDashboard = () => {
             })}
           </Swiper>
           <div className="pop-movie-list py-2">
-          <div className="pop-text px-6 flex justify-between h-[3rem]">
-            <h1 className="font-black font-poppins tracking-wide text-[2rem]">Popular Movie</h1>
-            <Link to={'/movie-list'}>
-            <div className="flex justify-center items-center h-[100%]">
-            <p className="text-red-600 font-normal font-montserrat">See All Movie</p>
-            <i className="fas fa-arrow-right text-red-600 ml-1"></i>
+            <div className="pop-text px-6 flex justify-between h-[3rem]">
+              <h1 className="font-black font-poppins tracking-wide text-[2rem]">
+                Popular Movie
+              </h1>
+              <Link to={"/movie-list"}>
+                <div className="flex justify-center items-center h-[100%]">
+                  <p className="text-red-600 font-normal font-montserrat">
+                    See All Movie
+                  </p>
+                  <i className="fas fa-arrow-right text-red-600 ml-1"></i>
+                </div>
+              </Link>
             </div>
-            </Link>
-          </div>
-        <div className="flex flex-wrap px-[1.7rem] gap-4 py-[2rem]">
-          {renderPopularMovieList()}
-        </div>
+            <div className="flex flex-wrap px-[1.7rem] gap-4 py-[2rem]">
+              {renderPopularMovieList()}
+            </div>
           </div>
         </>
-      ) : (
-        <span>
-          <h2>Sedang Memuat....</h2>
-        </span>
       )}
     </div>
   );

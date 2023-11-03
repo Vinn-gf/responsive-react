@@ -2,13 +2,14 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TokenProtected from "../assets/components/ProtectedComponents/TokenProtected";
-import AllMoviesList from "../pages/AllMoviesList";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
-// import DetailMovies from "../pages/DetailMovies";
 import FixDashboard from "../pages/FixDashboard";
+import ReduxAllMovies from "../pages/ReduxAllMovies";
 import ReduxDetailPage from "../pages/ReduxDetailPage";
 import ReduxSearchPage from "../pages/ReduxSearchPage";
+// import DetailMovies from "../pages/DetailMovies";
+// import AllMoviesList from "../pages/AllMoviesList";
 // import ReduxDashboard from "../pages/ReduxDashboard";
 // import QuizRedux from '../pages/reduxHandle/QuizRedux'
 // import ReduxPage from '../pages/reduxHandle/ReduxPage'
@@ -31,7 +32,7 @@ const RouterList = () => {
             </TokenProtected>
           }
         />
-        <Route path="/movie-list" element={<AllMoviesList />} />
+        <Route path="/movie-list" element={<ReduxAllMovies />} />
         <Route path="/search/:title" element={<ReduxSearchPage />} />
         <Route path="/:id" element={<ReduxDetailPage />} />
         {/* <Route path="/:id" element={<DetailMovies/>}/>
