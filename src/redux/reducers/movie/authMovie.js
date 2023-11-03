@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 
 const initialState = {
-    movies : []
+    movies : [],
+    usedPage : 1,
 }
 
 const authMovieSlice = createSlice({
@@ -11,10 +12,14 @@ const authMovieSlice = createSlice({
     reducers :{
         setMovies : (state, action) => {
             state.movies = { ...state, movies : action.payload}
+        },
+
+         setUsedPage : (state, action) => {
+            state.usedPage = { ...state, usedPage : action.payload}
         }
     }
 })
 
-export const { setMovies } = authMovieSlice.actions
+export const { setMovies, setUsedPage } = authMovieSlice.actions
 
 export default authMovieSlice.reducer

@@ -1,9 +1,10 @@
-// import { useQuery } from "@tanstack/react-query"
 import { useQuery } from "@tanstack/react-query"
 import { API_ENDPOINTS } from "../utils/api-endpoints"
 import https3 from "../utils/https3"
-// import https from "../utils/https"
-import https_binar from "../utils/https_binar"
+
+export const reduxGetSearch = async (query) => {
+  return await https3.get(`${API_ENDPOINTS.SEARCH_MOVIE}?page=1&query=${query ? query : ''}`);
+}
 
 
 const fetchSearchMovie = async ({queryKey}) =>{

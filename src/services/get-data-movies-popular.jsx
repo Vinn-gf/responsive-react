@@ -2,9 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { API_ENDPOINTS } from "../utils/api-endpoints";
 import https3 from "../utils/https3";
 
-export const reduxGetMoviePopular = async () => {
-    return await https3.get(API_ENDPOINTS.POPULAR)
+export const reduxGetMoviePopular = async (page) => {
+  return await https3.get(`${API_ENDPOINTS.POPULAR}?page=${page ? page : 1}`);
 }
+
 
 const fetchDataMoviesPopular = async ({ queryKey }) => {
   // Versi-3

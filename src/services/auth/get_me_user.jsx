@@ -1,8 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_ENDPOINTS } from "../../utils/api-endpoints";
+// import https from "../../utils/https";
 import https3 from "../../utils/https3";
 // import https_binar from "../../utils/https_binar";
 
+
+export const reduxGetUser = async () => {
+    return await https3.get(API_ENDPOINTS.GET_USER)
+}
 
 const fetchUserData = async ({queryKey}) =>{
     const [_key] = queryKey
