@@ -5,8 +5,9 @@ import TokenProtected from "../assets/components/ProtectedComponents/TokenProtec
 import AllMoviesList from "../pages/AllMoviesList";
 import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
-import DetailMovies from "../pages/DetailMovies";
+// import DetailMovies from "../pages/DetailMovies";
 import FixDashboard from "../pages/FixDashboard";
+import ReduxDetailPage from "../pages/ReduxDetailPage";
 import ReduxSearchPage from "../pages/ReduxSearchPage";
 // import ReduxDashboard from "../pages/ReduxDashboard";
 // import QuizRedux from '../pages/reduxHandle/QuizRedux'
@@ -30,9 +31,9 @@ const RouterList = () => {
             </TokenProtected>
           }
         />
-        <Route path="/search/:title" element={<ReduxSearchPage />} />
-        <Route path="/:id" element={<DetailMovies />} />
         <Route path="/movie-list" element={<AllMoviesList />} />
+        <Route path="/search/:title" element={<ReduxSearchPage />} />
+        <Route path="/:id" element={<ReduxDetailPage />} />
         {/* <Route path="/:id" element={<DetailMovies/>}/>
             <Route path="/search/:title" element={<SearchMovieList/>}/>
             <Route path='/movie-list' element={<AllMoviesList/>}/> */}

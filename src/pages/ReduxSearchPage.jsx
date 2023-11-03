@@ -40,7 +40,7 @@ const ReduxSearchPage = () => {
             {SearchResult.map((movie) => {
               return (
                 <div className="">
-                  <Link to={`/`}>
+                  <Link to={`/${movie.id}`}>
                     <img
                       className="poster-section hover:scale-[105%] shadow-lg shadow-slate-600 rounded-md w-[17.5rem] min-h-[28rem]"
                       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
