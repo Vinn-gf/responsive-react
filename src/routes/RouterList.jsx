@@ -2,12 +2,13 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TokenProtected from "../assets/components/ProtectedComponents/TokenProtected";
-import LoginPage from "../pages/auth/LoginPage";
+// import LoginPage from "../pages/auth/LoginPage";
 import RegisterPage from "../pages/auth/RegisterPage";
 import FixDashboard from "../pages/FixDashboard";
 import ReduxAllMovies from "../pages/ReduxAllMovies";
 import ReduxDetailPage from "../pages/ReduxDetailPage";
 import ReduxSearchPage from "../pages/ReduxSearchPage";
+import ResponsiveQuiz from "../pages/ResponsiveQuiz";
 // import DetailMovies from "../pages/DetailMovies";
 // import AllMoviesList from "../pages/AllMoviesList";
 // import ReduxDashboard from "../pages/ReduxDashboard";
@@ -23,7 +24,7 @@ const RouterList = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<ResponsiveQuiz />} />
         <Route
           path="/home"
           element={
